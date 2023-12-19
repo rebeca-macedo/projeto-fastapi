@@ -74,9 +74,9 @@ async def put_curso(curso_id: int, curso: CursoSchema, db: AsyncSession = Depend
             raise HTTPException(detail='Curso não encontrado', status_code=status.HTTP_404_NOT_FOUND)
 
 
-# DELETE curso
-@router.delete('/{curso_id}', response_model=CursoSchema, status_code=status.HTTP_204_NO_CONTENT)
-async def delete_curso(curso_id: int, curso: CursoSchema, db: AsyncSession = Depends(get_session)):
+# DELETE curso  -- deu erro no HTTP_204
+@router.delete('/{curso_id}', status_code=status.HTTP_204_NO_CONTENT)
+async def delete_curso(curso_id: int, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(CursoModel).filter(CursoModel.id == curso_id)
         result = await session.execute(query)
